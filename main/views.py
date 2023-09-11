@@ -38,6 +38,6 @@ def custom_login(request):
 #home view
 @login_required(login_url= 'login')
 def homepage(request):
-    return render(request, 'home.html')
+    return render(request, 'homepage.html')
 
 # Create your views here.
