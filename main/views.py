@@ -7,17 +7,17 @@ from django.contrib import messages
 
 #register view
 def registerview(request):
-    if request.method== "POST":
+    if request.method == "POST":
         form = RegistrationForm(request.POST)
-        if form.is_valid:
-            user= form.save()
+        if form.is_valid():  # Corrected the condition by adding ()
+            user = form.save()
             login(request, user)
             return redirect('home')
-        else:
-            form= RegistrationForm()
+    else:
+        form = RegistrationForm()
     
-    context={
-        'form':form
+    context = {
+        'form': form
     }
     return render(request, 'registration.html', context)
 
