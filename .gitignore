@@ -1,4 +1,4 @@
 env
 migrations
 __pycache__
-dbsqlite3
+db.sqlite3
