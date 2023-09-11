@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from .forms import RegistrationForm, CustomLoginForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 #register view
@@ -11,7 +12,7 @@ def registerview(request):
         if form.is_valid:
             user= form.save()
             login(request, user)
-            redirect('home')
+            return redirect('home')
         else:
             form= RegistrationForm()
     
@@ -21,6 +22,7 @@ def registerview(request):
     return render(request, 'registration.html', context)
 
 #login view
+
 def custom_login(request):
     if request.method == 'POST':
         form = CustomLoginForm(request.POST)
@@ -31,6 +33,9 @@ def custom_login(request):
             if user is not None:
                 login(request, user)
                 return redirect('home')  # Redirect to a success page or home page
+            elif user is None:
+                messages.error(request, "email or password incorrect")
+                return redirect('login')
     else:
         form = CustomLoginForm()
     return render(request, 'login.html', {'form': form})
